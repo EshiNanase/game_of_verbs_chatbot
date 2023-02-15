@@ -1,8 +1,28 @@
 import dotenv
 import os
+
+import telegram
 from telegram import Update, ForceReply, Bot
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from google.cloud import dialogflow
+import logging
+import requests
+import time
+
+
+class ChatbotLogsHandler(logging.Handler):
+
+    def __init__(self, telegram_chat_id):
+        super(ChatbotLogsHandler, self).__init__()
+        self.bot = telegram.Bot(token=os.environ['TELEGRAM_TOKEN'])
+        self.chat_id = telegram_chat_id
+
+    def emit(self, record):
+        log_entry = self.format(record)
+        self.bot.send_message(chat_id=self.chat_id, text=log_entry)
+
+
+logger = logging.getLogger(__file__)
 
 
 def start(update: Update, context: CallbackContext) -> None:
@@ -41,7 +61,21 @@ def main() -> None:
     dispatcher = updater.dispatcher
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, answer))
 
-    updater.start_polling()
+    telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
+    logging.basicConfig(level=logging.WARNING)
+    logger.addHandler(ChatbotLogsHandler(telegram_chat_id))
+
+    try:
+        updater.start_polling()
+
+    except requests.exceptions.ReadTimeout as err:
+        logger.warning('Боту прилетело:')
+        logger.warning(err, exc_info=True)
+
+    except requests.exceptions.ConnectionError as err:
+        logger.warning('Боту прилетело:')
+        logger.warning(err, exc_info=True)
+        time.sleep(5)
 
 
 if __name__ == '__main__':

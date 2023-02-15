@@ -5,6 +5,8 @@ from google.cloud import dialogflow
 
 dotenv.load_dotenv()
 
+URL = 'https://dvmn.org/media/filer_public/a7/db/a7db66c0-1259-4dac-9726-2d1fa9c44f20/questions.json'
+
 
 def create_intent(project_id, display_name, training_phrases_parts, message_texts):
 
@@ -29,7 +31,7 @@ def create_intent(project_id, display_name, training_phrases_parts, message_text
     )
 
 
-response = requests.get(os.environ['URL_FOR_QUESTIONS'])
+response = requests.get(url=URL)
 response.raise_for_status()
 data = response.json()
 
