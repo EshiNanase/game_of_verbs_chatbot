@@ -39,7 +39,7 @@ def main() -> None:
     updater = Updater(telegram_token, use_context=True)
 
     dispatcher = updater.dispatcher
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, answer))
 
     updater.start_polling()
 
