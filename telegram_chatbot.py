@@ -12,9 +12,9 @@ def start(update: Update, context: CallbackContext) -> None:
     )
 
 
-def echo(update: Update, context: CallbackContext) -> None:
-    answer = ask_dialogflow(update.message.text)
-    update.message.reply_text(answer)
+def answer(update: Update, context: CallbackContext) -> None:
+    dialogflow_answer = ask_dialogflow(update.message.text)
+    update.message.reply_text(dialogflow_answer.query_result.fulfillment_text)
 
 
 def ask_dialogflow(text):
@@ -29,16 +29,7 @@ def ask_dialogflow(text):
         request={"session": session, "query_input": query_input}
     )
 
-    print("Query text: {}".format(response.query_result.query_text))
-    print(
-        "Detected intent: {} (confidence: {})\n".format(
-            response.query_result.intent.display_name,
-            response.query_result.intent_detection_confidence,
-        )
-    )
-    print("Fulfillment text: {}\n".format(response.query_result.fulfillment_text))
-
-    return response.query_result.fulfillment_text
+    return response
 
 
 def main() -> None:

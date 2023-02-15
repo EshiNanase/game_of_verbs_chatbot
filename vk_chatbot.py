@@ -1,24 +1,31 @@
-import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 import os
 import dotenv
-import random
+import vk_api as vk
+from telegram_chatbot import ask_dialogflow
 
 
-def echo(event, vk_api):
-    vk_api.messages.send(
-        user_id=event.user_id,
-        message=event.text,
-        random_id=0
-    )
+def answer(event, vk_api):
+    dialogflow_answer = ask_dialogflow(event.text)
+    if not dialogflow_answer.query_result.intent.is_fallback:
+        vk_api.messages.send(
+            user_id=event.user_id,
+            message=dialogflow_answer.query_result.fulfillment_text,
+            random_id=0)
 
-dotenv.load_dotenv()
 
-vk_session = vk_api.VkApi(token=os.environ['VK_TOKEN'])
-vk_api = vk_session.get_api()
+def main() -> None:
+    dotenv.load_dotenv()
 
-longpoll = VkLongPoll(vk_session)
+    vk_session = vk.VkApi(token=os.environ['VK_TOKEN'])
+    vk_api = vk_session.get_api()
 
-for event in longpoll.listen():
-    if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-        echo(event, vk_api)
+    longpoll = VkLongPoll(vk_session)
+
+    for event in longpoll.listen():
+        if event.type == VkEventType.MESSAGE_NEW and event.to_me:
+            answer(event, vk_api)
+
+
+if __name__ == '__main__':
+    main()
