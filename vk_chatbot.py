@@ -24,8 +24,6 @@ def main() -> None:
     telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
     telegram_token = os.environ['TELEGRAM_TOKEN']
 
-    session_id = os.environ['SESSION_ID']
-
     logger.addHandler(ChatbotLogsHandler(telegram_chat_id, telegram_token))
 
     vk_session = vk.VkApi(token=os.environ['VK_TOKEN'])
@@ -37,6 +35,7 @@ def main() -> None:
         try:
             for event in longpoll.listen():
                 if event.type == VkEventType.MESSAGE_NEW and event.to_me:
+                    session_id = event.user_id
                     answer(event, vk_api, session_id)
 
         except requests.exceptions.ConnectionError as err:

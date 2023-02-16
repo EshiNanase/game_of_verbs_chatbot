@@ -17,7 +17,9 @@ def start(update: Update, context: CallbackContext) -> None:
 
 
 def answer(update: Update, context: CallbackContext) -> None:
-    dialogflow_answer = ask_dialogflow(update.message.text, os.environ['SESSION_ID'])
+    session_id = update.message.from_user['id']
+
+    dialogflow_answer = ask_dialogflow(update.message.text, session_id)
     update.message.reply_text(dialogflow_answer.query_result.fulfillment_text)
 
 

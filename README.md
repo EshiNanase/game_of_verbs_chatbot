@@ -41,7 +41,6 @@ The code needs .env file with such environment variables as:
 TELEGRAM_TOKEN = token of your Telegram bot, text https://t.me/BotFather to create one
 TELEGRAM_CHAT_ID = needed for logger you can find it here https://t.me/userinfobot
 VK_TOKEN = token of your VK group, follow these instructions to create https://habr.com/ru/company/vk/blog/570486/
-SESSION_ID = can be anything
 ```
 ## Running
 
