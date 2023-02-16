@@ -31,7 +31,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description='Script uploads more questions and answers to them'
     )
-    parser.add_argument('-url', help='Link for Json file with more questions and answers for Dialogflow agent')
+    parser.add_argument('-u', help='Link for Json file with more questions and answers for Dialogflow agent')
     args = parser.parse_args()
     url = args.url
     if not url:
