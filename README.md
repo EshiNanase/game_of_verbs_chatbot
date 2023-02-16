@@ -1,6 +1,7 @@
 # Game of Verbs Telegram and VK Bots
 
 Game of Verbs bots for answering most common customers' questions
+
 Examples: 
 Telegram: https://t.me/game_of_verbs_helper_bot
 VKontakte: https://vk.com/public218877484
