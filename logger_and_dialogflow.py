@@ -1,7 +1,6 @@
 import logging
 import telegram
 from google.cloud import dialogflow
-import os
 
 
 class ChatbotLogsHandler(logging.Handler):
