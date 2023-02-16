@@ -5,9 +5,12 @@ import telegram
 from telegram import Update, ForceReply, Bot
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from google.cloud import dialogflow
+from oauth2client.client import GoogleCredentials
 import logging
 import requests
 import time
+
+GOOGLE_APPLICATION_CREDENTIALS = 'credentials.json'
 
 
 class ChatbotLogsHandler(logging.Handler):

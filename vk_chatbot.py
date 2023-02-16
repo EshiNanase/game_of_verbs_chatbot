@@ -7,7 +7,7 @@ import requests
 import logging
 import time
 
-
+GOOGLE_APPLICATION_CREDENTIALS = 'credentials.json'
 logger = logging.getLogger(__file__)
 
 
