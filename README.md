@@ -46,3 +46,5 @@ The code should be ran in cmd like so:
 ```
 python telegram_chatbot.py & python vk_chatbot.py
 ```
+
+![](https://github.com/Your_Repository_Name/gif.gif)
