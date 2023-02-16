@@ -46,4 +46,4 @@ The code should be ran in cmd like so:
 ```
 python telegram_chatbot.py & python vk_chatbot.py
 ```
-![](https://github.com/EshiNanase/game_of_verbs_chatbot/gif.gif)
+![](https://github.com/EshiNanase/game_of_verbs_chatbot/blob/main/gif.gif)
