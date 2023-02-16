@@ -1,11 +1,6 @@
-import os
-import dotenv
 import requests
 from google.cloud import dialogflow
-
-dotenv.load_dotenv()
-
-URL = 'https://dvmn.org/media/filer_public/a7/db/a7db66c0-1259-4dac-9726-2d1fa9c44f20/questions.json'
+import argparse
 
 
 def create_intent(project_id, display_name, training_phrases_parts, message_texts):
@@ -31,13 +26,27 @@ def create_intent(project_id, display_name, training_phrases_parts, message_text
     )
 
 
-response = requests.get(url=URL)
-response.raise_for_status()
-data = response.json()
+def main() -> None:
 
-for i, j in zip(data.keys(), data.values()):
-    questions = j['questions']
-    answer = j['answer']
-    topic = i
+    parser = argparse.ArgumentParser(
+        description='Script uploads more questions and answers to them'
+    )
+    parser.add_argument('-url', help='Link for Json file with more questions and answers for Dialogflow agent')
+    args = parser.parse_args()
+    url = args.url
+    if not url:
+        raise RuntimeError('No url provided!')
 
-    create_intent(os.environ['PROJECT_ID'], topic, questions, [answer])
+    response = requests.get(url=url)
+    response.raise_for_status()
+    data_for_uploading = response.json()
+
+    for topic, information in data_for_uploading.items():
+        questions = information['questions']
+        answer = information['answer']
+
+        create_intent('bold-streamer-1337', topic, questions, [answer])
+
+
+if __name__ == '__main__':
+    main()

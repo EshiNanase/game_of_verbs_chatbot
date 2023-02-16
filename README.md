@@ -2,6 +2,10 @@
 
 Game of Verbs bots for answering most common customers' questions
 
+Examples: 
+Telegram: https://t.me/game_of_verbs_helper_bot
+VKontakte: https://vk.com/public218877484
+
 ## Prerequisites
 
 Virtual environment needs to be:
@@ -46,5 +50,3 @@ The code should be ran in cmd like so:
 ```
 python telegram_chatbot.py & python vk_chatbot.py
 ```
-
-![](https://github.com/Your_Repository_Name/gif.gif)
