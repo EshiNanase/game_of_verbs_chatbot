@@ -6,6 +6,8 @@ Examples:
 Telegram: https://t.me/game_of_verbs_helper_bot
 VKontakte: https://vk.com/public218877484
 
+![](https://github.com/EshiNanase/game_of_verbs_chatbot/blob/main/example.gif)
+
 ## Prerequisites
 
 Virtual environment needs to be:
@@ -49,4 +51,9 @@ The code should be ran in cmd like so:
 ```
 python telegram_chatbot.py & python vk_chatbot.py
 ```
-![](https://github.com/EshiNanase/game_of_verbs_chatbot/blob/main/example.gif)
+## For developers
+
+If you want to upload new information to the bot, try using this command:
+```
+python create_indent -u=URL
+```
