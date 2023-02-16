@@ -55,5 +55,5 @@ python telegram_chatbot.py & python vk_chatbot.py
 
 If you want to upload new information to the bot, try using this command:
 ```
-python create_indent -u=URL
+python create_indent.py -u=URL
 ```
