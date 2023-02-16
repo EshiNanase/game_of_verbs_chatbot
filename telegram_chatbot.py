@@ -2,10 +2,9 @@ import dotenv
 import os
 
 import telegram
-from telegram import Update, ForceReply, Bot
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram import Update, ForceReply
+from telegram.ext import Updater, MessageHandler, Filters, CallbackContext
 from google.cloud import dialogflow
-from oauth2client.client import GoogleCredentials
 import logging
 import requests
 import time
