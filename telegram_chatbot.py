@@ -9,8 +9,6 @@ import logging
 import requests
 import time
 
-GOOGLE_APPLICATION_CREDENTIALS = 'credentials.json'
-
 
 class ChatbotLogsHandler(logging.Handler):
 
