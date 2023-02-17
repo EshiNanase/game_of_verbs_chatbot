@@ -2,7 +2,8 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 import os
 import dotenv
 import vk_api as vk
-from logger_and_dialogflow import ask_dialogflow, ChatbotLogsHandler
+from logger import ChatbotLogsHandler
+from dialogflow_utils import ask_dialogflow
 import requests
 import logging
 import time
@@ -10,8 +11,8 @@ import time
 logger = logging.getLogger(__file__)
 
 
-def answer(event, vk_api, session_id):
-    dialogflow_answer = ask_dialogflow(event.text, session_id)
+def answer(event, vk_api, project_id, session_id):
+    dialogflow_answer = ask_dialogflow(event.text, project_id, session_id)
     if not dialogflow_answer.query_result.intent.is_fallback:
         vk_api.messages.send(
             user_id=event.user_id,
@@ -21,6 +22,9 @@ def answer(event, vk_api, session_id):
 
 def main() -> None:
     dotenv.load_dotenv()
+
+    project_id = os.environ['PROJECT_ID']
+
     telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
     telegram_token = os.environ['TELEGRAM_TOKEN']
 
@@ -36,7 +40,7 @@ def main() -> None:
             for event in longpoll.listen():
                 if event.type == VkEventType.MESSAGE_NEW and event.to_me:
                     session_id = event.user_id
-                    answer(event, vk_api, session_id)
+                    answer(event, vk_api, project_id, session_id)
 
         except requests.exceptions.ConnectionError as err:
             logger.warning('Боту прилетело:')

@@ -26,11 +26,24 @@ def create_intent(project_id, display_name, training_phrases_parts, message_text
     )
 
 
+def ask_dialogflow(text, project_id, session_id):
+
+    session_client = dialogflow.SessionsClient()
+    session = session_client.session_path(project=project_id, session=session_id)
+
+    text_input = dialogflow.TextInput(text=text, language_code='ru-RU')
+    query_input = dialogflow.QueryInput(text=text_input)
+
+    response = session_client.detect_intent(
+        request={"session": session, "query_input": query_input}
+    )
+
+    return response
+
+
 def main() -> None:
 
-    parser = argparse.ArgumentParser(
-        description='Script uploads more questions and answers to them'
-    )
+    parser = argparse.ArgumentParser()
     parser.add_argument('-u', help='Link for Json file with more questions and answers for Dialogflow agent')
     args = parser.parse_args()
     url = args.url
@@ -39,9 +52,9 @@ def main() -> None:
 
     response = requests.get(url=url)
     response.raise_for_status()
-    data_for_uploading = response.json()
+    intents = response.json()
 
-    for topic, information in data_for_uploading.items():
+    for topic, information in intents.items():
         questions = information['questions']
         answer = information['answer']
 

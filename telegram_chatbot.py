@@ -3,7 +3,8 @@ import os
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CallbackContext
 import logging
-from logger_and_dialogflow import ask_dialogflow, ChatbotLogsHandler
+from logger import ChatbotLogsHandler
+from dialogflow_utils import ask_dialogflow
 
 
 logger = logging.getLogger(__file__)
@@ -18,8 +19,9 @@ def start(update: Update, context: CallbackContext) -> None:
 
 def answer(update: Update, context: CallbackContext) -> None:
     session_id = update.message.from_user['id']
+    project_id = os.environ['PROJECT_ID']
 
-    dialogflow_answer = ask_dialogflow(update.message.text, session_id)
+    dialogflow_answer = ask_dialogflow(update.message.text, project_id, session_id)
     update.message.reply_text(dialogflow_answer.query_result.fulfillment_text)
 
 
