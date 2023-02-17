@@ -1,6 +1,8 @@
 import requests
 from google.cloud import dialogflow
 import argparse
+import os
+import dotenv
 
 
 def create_intent(project_id, display_name, training_phrases_parts, message_texts):
@@ -42,6 +44,9 @@ def ask_dialogflow(text, project_id, session_id):
 
 
 def main() -> None:
+    dotenv.load_dotenv()
+
+    project_id = os.environ['PROJECT_ID']
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-u', help='Link for Json file with more questions and answers for Dialogflow agent')
@@ -58,7 +63,7 @@ def main() -> None:
         questions = information['questions']
         answer = information['answer']
 
-        create_intent('bold-streamer-1337', topic, questions, [answer])
+        create_intent(project_id, topic, questions, [answer])
 
 
 if __name__ == '__main__':
